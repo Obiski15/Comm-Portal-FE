@@ -1,0 +1,93 @@
+"use client"
+
+import { format } from "date-fns"
+import { Calendar, ClipboardList, Download, Link } from "lucide-react"
+
+import useAssignment from "@/hooks/assignment/useAssignment"
+
+import AssignmentDetailsDescription from "../students/assignments/assignment-details-description"
+import ListenTranslate from "./listen-translate"
+import SubmitAssignment from "./submit-assignment"
+
+export default function Assignment({ assignmentId }: { assignmentId: string }) {
+  const { assignment, isLoading, error } = useAssignment(assignmentId)
+
+  return isLoading ? (
+    "todo: loading"
+  ) : error ? (
+    "todo: error"
+  ) : (
+    <div className="w-full">
+      <div className="space-y-6">
+        <div className="rounded-lg bg-popover/50 p-6 shadow-sm">
+          <div className="mb-4 flex items-center gap-2 text-sm uppercase text-muted-foreground">
+            <span>{assignment?.data.assignment?.[0]?.subject}</span>
+          </div>
+          <h1 className="mb-4 text-3xl font-bold tracking-tight">
+            {assignment?.data.assignment?.[0]?.title}
+          </h1>
+          <div className="mb-6 flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Calendar />
+              <span>
+                Due:{" "}
+                {assignment?.data.assignment?.[0]?.dueDate &&
+                  format(
+                    new Date(assignment?.data.assignment?.[0]?.dueDate),
+                    "yyyy-MM-dd"
+                  )}
+              </span>
+            </div>
+            {!!assignment?.data.assignment?.[0]?.attachments?.length && (
+              <div className="flex items-center gap-2">
+                <Link />
+                <span>
+                  {assignment?.data.assignment?.[0]?.attachments?.length}{" "}
+                  Attachment
+                </span>
+              </div>
+            )}
+          </div>
+
+          <AssignmentDetailsDescription assignmentId={assignmentId} />
+
+          {!!assignment?.data.assignment?.[0]?.attachments?.length && (
+            <div className="mt-6 border-t border-gray-200 pt-6">
+              <h2 className="mb-3 text-xl font-bold">Attachments</h2>
+              {/* todo: map over attachments */}
+              <a
+                className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-200 p-3 hover:bg-gray-100"
+                href="#"
+              >
+                <div className="flex items-center justify-start gap-3">
+                  <ClipboardList className="text-primary" />
+                  <span className="font-medium text-popover">
+                    algebra_worksheet.pdf
+                  </span>
+                </div>
+                <Download className="text-primary" />
+              </a>
+            </div>
+          )}
+        </div>
+        <div className="rounded-lg bg-popover/50 p-6 shadow-sm">
+          {!assignment?.data.assignment?.[0]?.submissions?.length ? (
+            <SubmitAssignment />
+          ) : (
+            <>
+              <h2 className="mb-4 text-xl font-bold">Teacher Feedback</h2>
+              <div>
+                <ListenTranslate
+                  description={
+                    assignment?.data.assignment?.[0]?.submissions?.[0]
+                      ?.feedback ?? ""
+                  }
+                />
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}

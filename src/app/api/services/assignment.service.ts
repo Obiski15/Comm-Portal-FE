@@ -11,7 +11,7 @@ import BaseService from "./base.service"
 
 export default class AssignmentService extends BaseService {
   constructor() {
-    super("assignment")
+    super("assignments")
   }
 
   async createAssignment(data: ICreateAssignment) {
@@ -44,7 +44,9 @@ export default class AssignmentService extends BaseService {
         })
       }
 
-      formdata.append(key, String(value))
+      if (!(key === "assignmentId")) {
+        formdata.append(key, String(value))
+      }
     })
 
     return await this.post(`/submit/${data.assignmentId}`, formdata, {

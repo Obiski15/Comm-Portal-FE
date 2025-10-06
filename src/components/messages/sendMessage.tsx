@@ -119,7 +119,6 @@ function SendMessage({
               src={image}
               alt="preview-image"
               fill
-              key={i}
               className="object-cover"
             />
             <button
@@ -143,12 +142,12 @@ function SendMessage({
                   <Languages />
                   <SelectValue placeholder="Translate Text?" />
                 </div>
-                <SelectContent>
-                  <SelectItem value="en-yo">English to Yoruba</SelectItem>
-                  <SelectItem value="en-ig">English to Igbo</SelectItem>
-                  <SelectItem value="e-ha">English to Hausa</SelectItem>
-                </SelectContent>
               </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="en-yo">English to Yoruba</SelectItem>
+                <SelectItem value="en-ig">English to Igbo</SelectItem>
+                <SelectItem value="e-ha">English to Hausa</SelectItem>
+              </SelectContent>
             </Select>
 
             <div className="flex items-center gap-1 rounded-full bg-green-500/20 p-2 text-green-400">

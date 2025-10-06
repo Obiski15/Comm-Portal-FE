@@ -69,8 +69,52 @@ type Ass = {
   dueDate: number
 }
 
-export type IAssignments = BaseResponse<unknown>
-export type IAssignment = BaseResponse<unknown>
+export type IAssignments = BaseResponse<{
+  assignments: {
+    subject: string
+    _id: string
+    title: string
+    description: string
+    dueDate: number
+    attachments?: {
+      url: string
+      fileName: string
+    }[]
+    submissions: {
+      student: string
+      content: string
+      images: string[]
+      grade: number
+      submittedAt: number
+      status: string
+    }[]
+    class: string
+  }[]
+}>
+
+export type IAssignment = BaseResponse<{
+  assignment: {
+    subject: string
+    _id: string
+    title: string
+    description: string
+    attachments?: {
+      url: string
+      fileName: string
+    }[]
+    dueDate: number
+    submissions: {
+      student: string
+      content: string
+      images: string[]
+      grade: number
+      feedback: string
+      submittedAt: number
+      status: string
+    }[]
+    class: string
+  }[]
+}>
 export interface IGradeAssignment {
   assignmentId: string
   grade: number
