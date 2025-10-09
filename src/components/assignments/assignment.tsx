@@ -1,12 +1,12 @@
 "use client"
 
+import NextLink from "next/link"
 import { format } from "date-fns"
 import { Calendar, ClipboardList, Download, Link } from "lucide-react"
 
 import useAssignment from "@/hooks/assignment/useAssignment"
 
 import AssignmentDetailsDescription from "../students/assignments/assignment-details-description"
-import ListenTranslate from "./listen-translate"
 import SubmitAssignment from "./submit-assignment"
 
 export default function Assignment({ assignmentId }: { assignmentId: string }) {
@@ -38,15 +38,13 @@ export default function Assignment({ assignmentId }: { assignmentId: string }) {
                   )}
               </span>
             </div>
-            {!!assignment?.data.assignment?.[0]?.attachments?.length && (
-              <div className="flex items-center gap-2">
-                <Link />
-                <span>
-                  {assignment?.data.assignment?.[0]?.attachments?.length}{" "}
-                  Attachment
-                </span>
-              </div>
-            )}
+            <div className="flex items-center gap-2">
+              <Link />
+              <span>
+                {assignment?.data.assignment?.[0]?.attachments?.length ?? 0}{" "}
+                Attachment(s)
+              </span>
+            </div>
           </div>
 
           <AssignmentDetailsDescription assignmentId={assignmentId} />
@@ -55,36 +53,47 @@ export default function Assignment({ assignmentId }: { assignmentId: string }) {
             <div className="mt-6 border-t border-gray-200 pt-6">
               <h2 className="mb-3 text-xl font-bold">Attachments</h2>
               {/* todo: map over attachments */}
-              <a
-                className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-200 p-3 hover:bg-gray-100"
-                href="#"
-              >
-                <div className="flex items-center justify-start gap-3">
-                  <ClipboardList className="text-primary" />
-                  <span className="font-medium text-popover">
-                    algebra_worksheet.pdf
-                  </span>
-                </div>
-                <Download className="text-primary" />
-              </a>
+
+              <div className="space-y-2">
+                {assignment?.data.assignment?.[0]?.attachments?.map(
+                  ({ fileName, url, fileType }) => (
+                    <div
+                      key={fileName}
+                      className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-gray-200 p-3 hover:bg-gray-100"
+                    >
+                      <div className="flex items-center justify-start gap-3">
+                        <ClipboardList className="text-primary" />
+                        <span className="font-medium text-popover">
+                          {`${fileName}.${fileType}`}
+                        </span>
+                      </div>
+                      <NextLink href={url} download>
+                        <Download className="text-primary" />
+                      </NextLink>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
           )}
         </div>
         <div className="rounded-lg bg-popover/50 p-6 shadow-sm">
           {!assignment?.data.assignment?.[0]?.submissions?.length ? (
-            <SubmitAssignment />
+            <SubmitAssignment assignmentId={assignmentId} />
           ) : (
-            <>
-              <h2 className="mb-4 text-xl font-bold">Teacher Feedback</h2>
-              <div>
-                <ListenTranslate
-                  description={
-                    assignment?.data.assignment?.[0]?.submissions?.[0]
-                      ?.feedback ?? ""
-                  }
-                />
-              </div>
-            </>
+            // <>
+            //   <h2 className="mb-4 text-xl font-bold">Teacher Feedback</h2>
+            //   <div>
+            //     <ListenTranslate
+            //       description={
+            //         assignment?.data.assignment?.[0]?.submissions?.[0]
+            //           ?.feedback ?? ""
+            //       }
+            //     />
+            //   </div>
+            // </>
+
+            "todo: your submission"
           )}
         </div>
       </div>

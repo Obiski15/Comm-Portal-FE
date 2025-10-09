@@ -79,6 +79,7 @@ export type IAssignments = BaseResponse<{
     attachments?: {
       url: string
       fileName: string
+      fileType: string
     }[]
     submissions: {
       student: string
@@ -101,6 +102,7 @@ export type IAssignment = BaseResponse<{
     attachments?: {
       url: string
       fileName: string
+      fileType: string
     }[]
     dueDate: number
     submissions: {
@@ -125,7 +127,9 @@ export interface ICreateAssignment {
   attachment: File
 }
 export interface ISubmitAssignment {
-  content: string
+  content?: string
+  images?: File[]
+  audio?: Blob
   assignmentId: string
 }
 export interface IEditAssignment {

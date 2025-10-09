@@ -20,7 +20,7 @@ export default class AssignmentService extends BaseService {
     Object.entries(data).forEach(([key, value]) => {
       if (value instanceof FileList) {
         Array.from(value).map(file => {
-          formdata.append("attachment", file)
+          formdata.append("attachments", file)
         })
       }
 
@@ -38,9 +38,13 @@ export default class AssignmentService extends BaseService {
     const formdata = new FormData()
 
     Object.entries(data).forEach(([key, value]) => {
-      if (value instanceof FileList) {
-        Array.from(value).map(file => {
-          formdata.append("image", file)
+      if (value instanceof Blob) {
+        formdata.append("audio", value)
+      }
+
+      if (typeof value === "object" && value !== null && "length" in value) {
+        value.map((file: File) => {
+          formdata.append("images", file)
         })
       }
 

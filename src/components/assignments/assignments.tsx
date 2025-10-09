@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { format } from "date-fns"
 
+import { cn } from "@/lib/utils"
 import useAssignments from "@/hooks/assignment/useAssignments"
 
 function Assignments() {
@@ -56,7 +57,14 @@ function Assignments() {
                     {format(new Date(dueDate), "yyyy-MM-dd")}
                   </td>
                   <td className="p-4">
-                    <span className="rounded-full bg-[#122118] px-3 py-1 text-sm text-primary">
+                    <span
+                      className={cn(
+                        "rounded-full px-3 py-1 text-sm",
+                        !!submissions.length
+                          ? "bg-[#122118] text-primary"
+                          : "bg-warning text-warning-foreground"
+                      )}
+                    >
                       {!!submissions.length ? "Submitted" : "Pending"}
                     </span>
                   </td>
