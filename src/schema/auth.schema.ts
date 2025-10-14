@@ -2,21 +2,18 @@ import * as z from "zod"
 
 export const signupSchema = z
   .object({
-    email: z.email("Enter a valid email address").nonempty("Email is required"),
+    fullName: z.string().nonempty("Full name is required"),
     password: z
       .string({ error: "Password is required" })
       .nonempty("Password is required")
       .min(6, "Password must be at least 6 characters long"),
-    confirm_password: z
+    confirmPassword: z
       .string({ error: "Password is required" })
       .nonempty("Please confirm your password")
       .min(6, "Password must be at least 6 characters long"),
-    role: z.enum(["student", "teacher", "parent", "admin"], {
-      error: "User role is required",
-    }),
   })
-  .refine(data => data.password === data.confirm_password, {
-    path: ["confirm_password"],
+  .refine(data => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
     message: "Passwords do not match",
   })
 

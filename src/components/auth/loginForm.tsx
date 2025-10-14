@@ -14,7 +14,6 @@ import { loginSchema } from "@/schema/auth.schema"
 
 import { useLogin } from "@/hooks/auth/useLogin"
 
-import Spin from "../shared/spin"
 import { Button } from "../ui/button"
 import {
   Form,
@@ -25,6 +24,7 @@ import {
   FormMessage,
 } from "../ui/form"
 import { Input } from "../ui/input"
+import { Spinner } from "../ui/spinner"
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false)
@@ -130,13 +130,12 @@ function LoginForm() {
           </div>
         </div>
 
-        <Spin />
         <Button
           className="flex w-full items-center justify-center gap-2"
           type="submit"
           disabled={isLoggingIn}
         >
-          <span>Log In</span>
+          {isLoggingIn && <Spinner />} <span>Log In</span>
         </Button>
       </form>
     </Form>

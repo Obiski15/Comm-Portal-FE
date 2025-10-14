@@ -20,10 +20,10 @@ export interface ILogin {
 }
 
 export interface ISignup {
-  email: string
   password: string
-  confirm_password: string
-  role: UserRole
+  confirmPassword: string
+  fullName: string
+  token: string | null
 }
 
 // user

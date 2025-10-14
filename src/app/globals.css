@@ -81,6 +81,11 @@
   }
 }
 
+::selection {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;

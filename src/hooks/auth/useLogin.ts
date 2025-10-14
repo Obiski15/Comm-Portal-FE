@@ -10,7 +10,7 @@ export const useLogin = () => {
     error,
   } = useMutation({
     mutationKey: ["login"],
-    mutationFn: async (data: ILogin) => new AuthService().login(data),
+    mutationFn: async (data: ILogin) => await new AuthService().login(data),
   })
 
   return { login, isLoggingIn, error }

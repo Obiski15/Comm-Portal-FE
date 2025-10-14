@@ -9,8 +9,8 @@ export const useSignup = () => {
     isPending: isSigningUp,
     error,
   } = useMutation({
-    mutationKey: ["login"],
-    mutationFn: async (data: ISignup) => new AuthService().signup(data),
+    mutationKey: ["signup"],
+    mutationFn: async (data: ISignup) => await new AuthService().signup(data),
   })
 
   return { signup, isSigningUp, error }
