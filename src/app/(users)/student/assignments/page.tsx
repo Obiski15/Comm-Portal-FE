@@ -8,11 +8,7 @@ export const metadata: Metadata = {
 
 function page() {
   return (
-    <main className="flex-1 p-8">
-      <div className="mb-8 flex items-center justify-between">
-        <h2 className="text-4xl font-bold">Assignments</h2>
-      </div>
-
+    <main className="h-full p-8">
       <Assignments />
     </main>
   )

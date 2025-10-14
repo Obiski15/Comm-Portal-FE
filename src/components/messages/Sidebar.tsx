@@ -7,9 +7,10 @@ import { useChats } from "@/hooks/messages/useChats"
 
 import LoadingChats from "../skeletons/loading-chats"
 import { Input } from "../ui/input"
+import ChatsError from "./chats-error"
 
 function Sidebar() {
-  const { isLoadingChats, error } = useChats()
+  const { isLoadingChats, error, refetch } = useChats()
 
   return (
     <div className="flex w-1/3 flex-col rounded-2xl bg-card p-6">
@@ -38,7 +39,7 @@ function Sidebar() {
         {isLoadingChats ? (
           <LoadingChats />
         ) : error ? (
-          "todo: error..."
+          <ChatsError refetch={refetch} />
         ) : (
           <div className="space-y-2">
             {Array.from({ length: 3 }, (_, i) => (

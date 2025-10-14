@@ -7,6 +7,7 @@ import { Plus, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRecipientsToChat } from "@/hooks/messages/useRecipientsToChat"
 
+import NoRecipientToChat from "../empty-states/no-recipients-to-chat"
 import LoadingChats from "../skeletons/loading-chats"
 import { Button } from "../ui/button"
 import {
@@ -18,9 +19,10 @@ import {
   DialogTrigger,
 } from "../ui/dialog"
 import { Input } from "../ui/input"
+import ChatsError from "./chats-error"
 
 function NewMessage() {
-  const { data: recipients, isLoading, error } = useRecipientsToChat()
+  const { data: recipients, isLoading, error, refetch } = useRecipientsToChat()
 
   return (
     <Dialog>
@@ -56,9 +58,9 @@ function NewMessage() {
             {isLoading ? (
               <LoadingChats />
             ) : error ? (
-              "todo: error"
+              <ChatsError refetch={refetch} />
             ) : !recipients?.data?.recipients ? (
-              "todo: no recipients to chat"
+              <NoRecipientToChat />
             ) : (
               <div className="no_scrollbar max-h-[300px] flex-1 overflow-y-scroll">
                 <div className="space-y-1">

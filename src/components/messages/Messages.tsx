@@ -11,8 +11,10 @@ import { useMessages } from "@/hooks/messages/useMessages"
 import { useUser } from "@/hooks/user/useUser"
 import { useSocket } from "@/hooks/useSocket"
 
+import NotChatHistory from "../empty-states/no-chat-history"
 import LoadingMessages from "../skeletons/loading-messages"
 import { Skeleton } from "../ui/skeleton"
+import MessagesError from "./messages-error"
 import SendMessage from "./sendMessage"
 
 function Messages({ messageId }: { messageId: MessageId }) {
@@ -72,88 +74,99 @@ function Messages({ messageId }: { messageId: MessageId }) {
     }
   }, [chatMessages])
 
-  return error ? (
-    "todo: error"
-  ) : (
+  return (
     <div className="flex w-2/3 flex-col rounded-2xl bg-card p-6">
-      <div className="mb-6 flex items-center gap-4 border-b border-border pb-4">
-        {isLoadingMessages ? (
-          <>
-            <Skeleton className="size-14 rounded-full" />
-
-            <div className="space-y-1">
-              <Skeleton className="h-5 w-32" />
-              <Skeleton className="h-3 w-20" />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="relative aspect-square size-14 overflow-hidden rounded-full bg-cover bg-center bg-no-repeat">
-              <Image
-                src={
-                  messages?.data.recipientInfo?.image ??
-                  "/images/no-profile.jpg"
-                }
-                alt={messages?.data.recipientInfo?.name ?? "user"}
-                className="object-cover"
-                fill
-              />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold">
-                {messages?.data.recipientInfo?.name}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {isUserActive ? "Active now" : "Offline"}
-              </p>
-            </div>
-            <div className="ml-auto flex items-center gap-2">
-              <button className="rounded-full p-2 transition-colors hover:bg-muted">
-                <Phone />
-              </button>
-              <button className="rounded-full p-2 transition-colors hover:bg-muted">
-                <Video />
-              </button>
-            </div>{" "}
-          </>
-        )}
-      </div>
-
-      {isLoadingMessages ? (
-        <LoadingMessages />
+      {error ? (
+        <MessagesError messageId={messageId} />
       ) : (
-        <div
-          ref={chatsContainerRef}
-          className="-mr-4 mb-6 max-h-[300px] flex-1 space-y-6 overflow-y-scroll pr-4"
-        >
-          {!chatMessages?.length
-            ? "todo: No Chat history"
-            : chatMessages?.map(({ sender, content }, i) => (
-                <div
-                  key={i}
-                  className={cn(
-                    "flex gap-3",
-                    sender === user?.data.user?._id
-                      ? "justify-end"
-                      : "justify-start"
-                  )}
-                >
+        <>
+          <div className="mb-6 flex items-center gap-4 border-b border-border pb-4">
+            {isLoadingMessages ? (
+              <>
+                <Skeleton className="size-14 rounded-full" />
+
+                <div className="space-y-1">
+                  <Skeleton className="h-5 w-32" />
+                  <Skeleton className="h-3 w-20" />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="relative aspect-square size-14 overflow-hidden rounded-full bg-cover bg-center bg-no-repeat">
+                  <Image
+                    src={
+                      messages?.data.recipientInfo?.image ??
+                      "/images/no-profile.jpg"
+                    }
+                    alt={messages?.data.recipientInfo?.name ?? "user"}
+                    className="object-cover"
+                    fill
+                  />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">
+                    {messages?.data.recipientInfo?.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {isUserActive ? "Active now" : "Offline"}
+                  </p>
+                </div>
+                <div className="ml-auto flex items-center gap-2">
+                  <button className="rounded-full p-2 transition-colors hover:bg-muted">
+                    <Phone />
+                  </button>
+                  <button className="rounded-full p-2 transition-colors hover:bg-muted">
+                    <Video />
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+
+          {isLoadingMessages ? (
+            <LoadingMessages />
+          ) : (
+            // todo: no messages found
+            <div
+              ref={chatsContainerRef}
+              className="-mr-4 mb-6 max-h-[300px] flex-1 space-y-6 overflow-y-scroll pr-4"
+            >
+              {!chatMessages?.length ? (
+                <NotChatHistory />
+              ) : (
+                chatMessages?.map(({ sender, content }, i) => (
                   <div
+                    key={i}
                     className={cn(
-                      "max-w-lg whitespace-pre-line rounded-3xl",
+                      "flex gap-3",
                       sender === user?.data.user?._id
-                        ? "rounded-br-lg bg-primary p-4 text-gray-900"
-                        : "rounded-bl-lg bg-muted p-4"
+                        ? "justify-end"
+                        : "justify-start"
                     )}
                   >
-                    <p>{content}</p>
+                    <div
+                      className={cn(
+                        "max-w-lg whitespace-pre-line rounded-3xl",
+                        sender === user?.data.user?._id
+                          ? "rounded-br-lg bg-primary p-4 text-gray-900"
+                          : "rounded-bl-lg bg-muted p-4"
+                      )}
+                    >
+                      {/* todo: display images in chat */}
+                      <p>{content}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-        </div>
-      )}
-      {!isLoadingMessages && (
-        <SendMessage messageId={messageId} setChatMessages={setChatMessages} />
+                ))
+              )}
+            </div>
+          )}
+          {!isLoadingMessages && !error && (
+            <SendMessage
+              messageId={messageId}
+              setChatMessages={setChatMessages}
+            />
+          )}
+        </>
       )}
     </div>
   )

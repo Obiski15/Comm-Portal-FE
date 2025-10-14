@@ -13,14 +13,14 @@ import { useUser } from "@/hooks/user/useUser"
 import { Skeleton } from "../ui/skeleton"
 
 export default function Sidebar() {
-  const { data: user, isLoading } = useUser()
+  const { data: user, isLoading, error } = useUser()
 
   const pathname = usePathname()
 
   return (
     <div className="w-80 flex-shrink-0 border-r border-border/50 bg-background">
       <div className="flex h-full flex-col p-4">
-        {isLoading ? (
+        {isLoading || error ? (
           <div className="flex items-center justify-start gap-3">
             <Skeleton className="size-10 rounded-full" />
 

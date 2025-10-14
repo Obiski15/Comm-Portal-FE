@@ -8,6 +8,7 @@ export const useMessages = (id: MessageId) => {
     data: messages,
     isLoading: isLoadingMessages,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["messages", id],
     queryFn: async () => await new MessageService().getMessages(id),
@@ -15,5 +16,5 @@ export const useMessages = (id: MessageId) => {
     enabled: !!id,
   })
 
-  return { messages, isLoadingMessages, error }
+  return { messages, isLoadingMessages, error, refetch }
 }

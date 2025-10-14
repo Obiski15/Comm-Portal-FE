@@ -1,11 +1,14 @@
 "use client"
 
 import NextLink from "next/link"
+import { IError } from "@/types"
 import { format } from "date-fns"
 import { Calendar, ClipboardList, Download, Link } from "lucide-react"
 
 import useAssignment from "@/hooks/assignment/useAssignment"
 
+import NoAssignment from "../empty-states/no-assignment"
+import Error from "../shared/ErrorComponent"
 import LoadingAssignment from "../skeletons/loading-assignment"
 import AssignmentDetailsDescription from "../students/assignments/assignment-details-description"
 import SubmitAssignment from "./submit-assignment"
@@ -16,7 +19,13 @@ export default function Assignment({ assignmentId }: { assignmentId: string }) {
   return isLoading ? (
     <LoadingAssignment />
   ) : error ? (
-    "todo: error"
+    <div className="flex h-full items-center justify-center">
+      <Error
+        error={error.message ?? (error as unknown as IError).error.message}
+      />
+    </div>
+  ) : !assignment?.data.assignment.length ? (
+    <NoAssignment />
   ) : (
     <div className="w-full">
       <div className="space-y-6">

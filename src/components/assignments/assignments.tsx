@@ -1,11 +1,14 @@
 "use client"
 
 import Link from "next/link"
+import { IError } from "@/types"
 import { format } from "date-fns"
 
 import { cn } from "@/lib/utils"
 import useAssignments from "@/hooks/assignment/useAssignments"
 
+import NoAssignments from "../empty-states/no-assignments"
+import Error from "../shared/ErrorComponent"
 import LoadingAssignments from "../skeletons/loading-assignments"
 
 function Assignments() {
@@ -14,11 +17,19 @@ function Assignments() {
   return isLoading ? (
     <LoadingAssignments />
   ) : error ? (
-    "todo: error"
+    <div className="flex h-full items-center justify-center">
+      <Error
+        error={error.message ?? (error as unknown as IError).error.message}
+      />
+    </div>
   ) : !assignments?.data.assignments.length ? (
-    "todo: no assignments"
+    <NoAssignments />
   ) : (
-    <>
+    <div>
+      <div className="mb-8 flex items-center justify-between">
+        <h2 className="text-4xl font-bold">Assignments</h2>
+      </div>
+
       <div className="mb-6 border-b border-border/50">
         <div className="flex gap-8">
           <Link
@@ -86,7 +97,7 @@ function Assignments() {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   )
 }
 

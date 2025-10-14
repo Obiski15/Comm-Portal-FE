@@ -7,10 +7,11 @@ export const useChats = () => {
     data: chats,
     isLoading: isLoadingChats,
     error,
+    refetch,
   } = useQuery({
     queryKey: ["chats"],
     queryFn: async () => await new MessageService().getChats(),
   })
 
-  return { chats, isLoadingChats, error }
+  return { chats, isLoadingChats, error, refetch }
 }
