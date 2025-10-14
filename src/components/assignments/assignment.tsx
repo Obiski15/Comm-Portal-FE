@@ -6,6 +6,7 @@ import { Calendar, ClipboardList, Download, Link } from "lucide-react"
 
 import useAssignment from "@/hooks/assignment/useAssignment"
 
+import LoadingAssignment from "../skeletons/loading-assignment"
 import AssignmentDetailsDescription from "../students/assignments/assignment-details-description"
 import SubmitAssignment from "./submit-assignment"
 
@@ -13,7 +14,7 @@ export default function Assignment({ assignmentId }: { assignmentId: string }) {
   const { assignment, isLoading, error } = useAssignment(assignmentId)
 
   return isLoading ? (
-    "todo: loading"
+    <LoadingAssignment />
   ) : error ? (
     "todo: error"
   ) : (

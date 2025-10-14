@@ -4,8 +4,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { Plus, Search } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import { useRecipientsToChat } from "@/hooks/messages/useRecipientsToChat"
 
+import LoadingChats from "../skeletons/loading-chats"
 import { Button } from "../ui/button"
 import {
   Dialog,
@@ -24,7 +26,7 @@ function NewMessage() {
     <Dialog>
       <DialogTrigger asChild>
         <Button className="flex h-12 items-center justify-center gap-2 rounded-full px-6 font-bold">
-          <Plus />
+          <Plus size={24} className="flex-shrink-0 font-bold" />
           <span>New Message</span>
         </Button>
       </DialogTrigger>
@@ -41,7 +43,7 @@ function NewMessage() {
           </DialogHeader>
 
           <div className="flex flex-col">
-            <div className="border-b border-border py-4">
+            <div className={cn("py-4", !isLoading && "border-b border-border")}>
               <div className="relative">
                 <Search className="absolute left-2 top-2" />
                 <Input
@@ -52,7 +54,7 @@ function NewMessage() {
             </div>
 
             {isLoading ? (
-              "todo: loading..."
+              <LoadingChats />
             ) : error ? (
               "todo: error"
             ) : !recipients?.data?.recipients ? (

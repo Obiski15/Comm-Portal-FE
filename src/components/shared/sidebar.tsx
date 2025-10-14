@@ -10,6 +10,8 @@ import { USER_SIDEBAR } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 import { useUser } from "@/hooks/user/useUser"
 
+import { Skeleton } from "../ui/skeleton"
+
 export default function Sidebar() {
   const { data: user, isLoading } = useUser()
 
@@ -19,7 +21,14 @@ export default function Sidebar() {
     <div className="w-80 flex-shrink-0 border-r border-border/50 bg-background">
       <div className="flex h-full flex-col p-4">
         {isLoading ? (
-          "todo: Loading..."
+          <div className="flex items-center justify-start gap-3">
+            <Skeleton className="size-10 rounded-full" />
+
+            <div className="flex-1 space-y-2">
+              <Skeleton className="h-3 w-1/4" />
+              <Skeleton className="h-3" />
+            </div>
+          </div>
         ) : (
           <div className="flex items-center gap-3 p-2">
             <div className="relative aspect-square size-10 rounded-full">

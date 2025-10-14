@@ -5,6 +5,7 @@ import { Search } from "lucide-react"
 
 import { useChats } from "@/hooks/messages/useChats"
 
+import LoadingChats from "../skeletons/loading-chats"
 import { Input } from "../ui/input"
 
 function Sidebar() {
@@ -35,7 +36,7 @@ function Sidebar() {
 
       <div className="-mr-3 flex-1 overflow-y-auto">
         {isLoadingChats ? (
-          "todo: Loading..."
+          <LoadingChats />
         ) : error ? (
           "todo: error..."
         ) : (

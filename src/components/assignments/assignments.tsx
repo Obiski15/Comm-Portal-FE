@@ -6,13 +6,17 @@ import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import useAssignments from "@/hooks/assignment/useAssignments"
 
+import LoadingAssignments from "../skeletons/loading-assignments"
+
 function Assignments() {
   const { assignments, isLoading, error } = useAssignments()
 
   return isLoading ? (
-    "todo: loading"
+    <LoadingAssignments />
   ) : error ? (
     "todo: error"
+  ) : !assignments?.data.assignments.length ? (
+    "todo: no assignments"
   ) : (
     <>
       <div className="mb-6 border-b border-border/50">
