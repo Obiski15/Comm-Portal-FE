@@ -23,7 +23,7 @@ export interface ISignup {
   password: string
   confirmPassword: string
   fullName: string
-  token: string | null
+  token?: string
 }
 
 // user

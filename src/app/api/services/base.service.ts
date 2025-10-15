@@ -24,7 +24,7 @@ export default abstract class BaseService {
     } catch (error) {
       if (error instanceof AxiosError) {
         throw {
-          data: { ...error.response?.data },
+          ...error.response?.data,
           statusCode: error.response?.status,
         }
       }

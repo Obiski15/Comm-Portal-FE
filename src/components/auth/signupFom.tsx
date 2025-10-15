@@ -1,8 +1,8 @@
 "use client"
 
-import { Suspense, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { IError } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Eye, EyeClosed } from "lucide-react"
@@ -26,22 +26,20 @@ import {
 import { Input } from "../ui/input"
 import { Spinner } from "../ui/spinner"
 
-function SignupForm() {
+function SignupForm({ token }: { token?: string }) {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
   })
   const { signup, isSigningUp } = useSignup()
-  const searchParams = useSearchParams()
   const router = useRouter()
 
   const handleSubmit: SubmitHandler<z.infer<typeof signupSchema>> = values => {
     signup(
-      { ...values, token: searchParams.get("token") },
+      { ...values, token },
       {
         onError: error => {
-          window.alert("error")
           toast.error((error as unknown as IError).error.message)
         },
 
@@ -59,110 +57,110 @@ function SignupForm() {
   }
 
   return (
-    <Suspense fallback="Loading....">
-      <Form {...form}>
-        <form className="space-y-5" onSubmit={form.handleSubmit(handleSubmit)}>
-          <FormField
-            name="fullName"
-            control={form.control}
-            render={({ field, fieldState: { error } }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <div className="relative mt-1">
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="e.g. John Doe"
-                      className="pr-10"
-                      disabled={isSigningUp}
-                    />
-                  </FormControl>
-                </div>
-                <FormMessage>{error?.message}</FormMessage>
-              </FormItem>
-            )}
-          />
+    <Form {...form}>
+      <form className="space-y-5" onSubmit={form.handleSubmit(handleSubmit)}>
+        <FormField
+          name="fullName"
+          control={form.control}
+          render={({ field, fieldState: { error } }) => (
+            <FormItem>
+              <FormLabel>Full Name</FormLabel>
+              <div className="relative mt-1">
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="e.g. John Doe"
+                    className="pr-10"
+                    disabled={isSigningUp}
+                  />
+                </FormControl>
+              </div>
+              <FormMessage>{error?.message}</FormMessage>
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            name="password"
-            control={form.control}
-            render={({ field, fieldState: { error } }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <div className="relative mt-1">
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type={!showPassword ? "password" : "text"}
-                      autoComplete="password"
-                      placeholder="******"
-                      className="pr-10"
-                      disabled={isSigningUp}
-                    />
-                  </FormControl>
-                  <div
-                    className="absolute right-2 top-1.5"
-                    onClick={() => setShowPassword(p => !p)}
-                  >
-                    {showPassword ? <Eye /> : <EyeClosed />}
-                  </div>
-                </div>
-                <FormMessage>{error?.message}</FormMessage>
-              </FormItem>
-            )}
-          />
+        <FormField
+          name="password"
+          control={form.control}
+          render={({ field, fieldState: { error } }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <div className="relative mt-1">
+                <FormControl>
+                  <Input
+                    {...field}
+                    type={!showPassword ? "password" : "text"}
+                    autoComplete="password"
+                    placeholder="******"
+                    className="pr-10"
+                    disabled={isSigningUp}
+                  />
+                </FormControl>
+                <button
+                  type="button"
+                  className="absolute right-2 top-1.5"
+                  onClick={() => setShowPassword(p => !p)}
+                >
+                  {showPassword ? <Eye /> : <EyeClosed />}
+                </button>
+              </div>
+              <FormMessage>{error?.message}</FormMessage>
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            name="confirmPassword"
-            control={form.control}
-            render={({ field, fieldState: { error } }) => (
-              <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
-                <div className="relative mt-1">
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type={!showConfirmPassword ? "password" : "text"}
-                      autoComplete="password"
-                      placeholder="******"
-                      className="pr-10"
-                      disabled={isSigningUp}
-                    />
-                  </FormControl>
-                  <div
-                    className="absolute right-2 top-1.5"
-                    onClick={() => setShowConfirmPassword(p => !p)}
-                  >
-                    {showPassword ? <Eye /> : <EyeClosed />}
-                  </div>
-                </div>
-                <FormMessage>{error?.message}</FormMessage>
-              </FormItem>
-            )}
-          />
+        <FormField
+          name="confirmPassword"
+          control={form.control}
+          render={({ field, fieldState: { error } }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <div className="relative mt-1">
+                <FormControl>
+                  <Input
+                    {...field}
+                    type={!showConfirmPassword ? "password" : "text"}
+                    autoComplete="password"
+                    placeholder="******"
+                    className="pr-10"
+                    disabled={isSigningUp}
+                  />
+                </FormControl>
+                <button
+                  type="button"
+                  className="absolute right-2 top-1.5"
+                  onClick={() => setShowConfirmPassword(p => !p)}
+                >
+                  {showPassword ? <Eye /> : <EyeClosed />}
+                </button>
+              </div>
+              <FormMessage>{error?.message}</FormMessage>
+            </FormItem>
+          )}
+        />
 
-          <div className="flex items-center justify-between">
-            <div className="text-sm">
-              <span>Already have an account? </span>
-              <Link
-                className="font-medium text-accent hover:text-accent/80"
-                href="/login"
-              >
-                Login
-              </Link>
-            </div>
+        <div className="flex items-center justify-between">
+          <div className="text-sm">
+            <span>Already have an account? </span>
+            <Link
+              className="font-medium text-accent hover:text-accent/80"
+              href="/login"
+            >
+              Login
+            </Link>
           </div>
+        </div>
 
-          <Button
-            className="flex w-full items-center justify-center gap-2"
-            type="submit"
-            disabled={isSigningUp}
-          >
-            {isSigningUp && <Spinner />} <span>Sign Up</span>
-          </Button>
-        </form>
-      </Form>
-    </Suspense>
+        <Button
+          className="flex w-full items-center justify-center gap-2"
+          type="submit"
+          disabled={isSigningUp}
+        >
+          {isSigningUp && <Spinner />} <span>Sign Up</span>
+        </Button>
+      </form>
+    </Form>
   )
 }
 

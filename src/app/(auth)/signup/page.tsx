@@ -7,7 +7,13 @@ export const metadata: Metadata = {
   title: "Signup",
 }
 
-function page() {
+interface Props {
+  searchParams: Promise<{ [key: string]: string | undefined }>
+}
+
+export default async function SignupPage({ searchParams }: Props) {
+  const token = (await searchParams).token
+
   return (
     <>
       <Header
@@ -15,9 +21,7 @@ function page() {
         description="Welcome! Let's get you started"
       />
 
-      <SignupForm />
+      <SignupForm token={token} />
     </>
   )
 }
-
-export default page

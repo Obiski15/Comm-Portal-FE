@@ -12,7 +12,6 @@ export default function RecordAssignment() {
   const [isRecording, setIsRecording] = useState<boolean>(false)
   const [recordingTime, setRecordingTime] = useState<number>(0)
   const [isPaused, setIsPaused] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const audioContextRef = useRef<AudioContext | null>(null)
@@ -48,12 +47,6 @@ export default function RecordAssignment() {
       }
     }
   }, [])
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error)
-    }
-  }, [error])
 
   const visualize = useCallback(() => {
     const analyser = analyserRef.current
@@ -116,8 +109,6 @@ export default function RecordAssignment() {
 
   const startRecording = useCallback(async () => {
     try {
-      setError(null)
-
       // Check if browser supports required APIs
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         throw new Error("Your browser does not support audio recording")
@@ -180,7 +171,7 @@ export default function RecordAssignment() {
       }, 1000)
     } catch (err) {
       console.error("Error accessing microphone:", err)
-      setError(
+      toast.error(
         (err as unknown as Error).message ||
           "Could not access microphone. Please grant permission."
       )

@@ -95,12 +95,13 @@ function LoginForm() {
                     disabled={isLoggingIn}
                   />
                 </FormControl>
-                <div
+                <button
+                  type="button"
                   className="absolute right-2 top-1.5"
                   onClick={() => setShowPassword(p => !p)}
                 >
                   {showPassword ? <Eye /> : <EyeClosed />}
-                </div>
+                </button>
               </div>
               <div className="mt-1">
                 <FormMessage>{error?.message}</FormMessage>
