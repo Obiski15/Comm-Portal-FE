@@ -43,9 +43,11 @@ function SignupForm({ token }: { token?: string }) {
           toast.error((error as unknown as IError).error.message)
         },
 
-        onSuccess: data => {
-          toast.success("Account Created Successfully")
-          router.push(`/${data.data.user.role}/dashboard`)
+        onSuccess: () => {
+          toast.success(
+            "Account Created Successfully.\nRedirecting to login..."
+          )
+          router.push("/login")
           form.reset({
             fullName: "",
             password: "",

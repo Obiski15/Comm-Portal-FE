@@ -21,17 +21,17 @@ const nextConfig: NextConfig = {
         source: "/api/v1/:path*",
         destination: `${baseUrl}/api/v1/:path*`,
       },
-      {
-        // This will handle subdomain requests
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "(?<subdomain>.*)\\.localhost",
-          },
-        ],
-        destination: "/:subdomain/:path*",
-      },
+      // {
+      // This will handle subdomain requests
+      // source: "/:path*",
+      // has: [
+      //   {
+      //     type: "host",
+      //     value: "(?<subdomain>.*)\\.localhost",
+      //   },
+      // ],
+      // destination: "/:subdomain/:path*",
+      // },
     ]
   },
 }

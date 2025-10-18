@@ -94,7 +94,7 @@ function NewMessage() {
                       Others
                     </div>
                     {recipients.data.recipients.map(
-                      ({ _id, name, image, role }) => (
+                      ({ _id, full_name, image, role }) => (
                         <Link
                           key={_id}
                           className="flex cursor-pointer items-center gap-3 rounded-lg p-3 transition-colors hover:bg-border/60"
@@ -109,7 +109,7 @@ function NewMessage() {
                             />
                           </div>
                           <div className="flex-1 capitalize">
-                            <p className="font-medium">{name}</p>
+                            <p className="font-medium">{full_name}</p>
                             <p className="text-xs text-muted-foreground">
                               {role}
                             </p>

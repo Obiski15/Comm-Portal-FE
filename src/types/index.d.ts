@@ -30,7 +30,7 @@ export interface ISignup {
 export interface User {
   _id: string
   email: string
-  name: string
+  full_name: string
   class?: string
   parentsOf?: [string]
   childOf?: string
@@ -155,6 +155,6 @@ export type ISendMessage =
 export type IChats = BaseResponse<{ chats?: User[] }>
 export type IMessages = BaseResponse<{
   messages?: Message[]
-  recipientInfo: { _id: string; name: string; image: string }
+  recipientInfo: { _id: string; full_name: string; image: string }
 }>
 export type IRecipientsToChat = BaseResponse<{ recipients: User[] }>

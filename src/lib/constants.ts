@@ -10,88 +10,88 @@ export const USER_SIDEBAR = {
     {
       name: "dashboard",
       Icon: LayoutDashboard,
-      path: "/dashboard",
+      path: "/student/dashboard",
     },
     {
       name: "assignments",
       Icon: ClipboardList,
-      path: "/assignments",
+      path: "/student/assignments",
     },
     {
       name: "grades",
       Icon: ChartNoAxesCombined,
-      path: "/grades",
+      path: "/student/grades",
     },
     {
       name: "messages",
       Icon: Mail,
-      path: "/messages",
+      path: "/student/messages",
     },
   ],
   parent: [
     {
       name: "dashboard",
       Icon: LayoutDashboard,
-      path: "/dashboard",
+      path: "/parent/dashboard",
     },
     {
       name: "assignments",
       Icon: ClipboardList,
-      path: "/assignments",
+      path: "/parent/assignments",
     },
     {
       name: "grades",
       Icon: ChartNoAxesCombined,
-      path: "/grades",
+      path: "/parent/grades",
     },
     {
       name: "messages",
       Icon: Mail,
-      path: "/messages",
+      path: "/parent/messages",
     },
   ],
   teacher: [
     {
       name: "dashboard",
       Icon: LayoutDashboard,
-      path: "/student",
+      path: "/teacher/dashboard",
     },
     {
       name: "assignments",
       Icon: ClipboardList,
-      path: "/assignments",
+      path: "/teacher/assignments",
     },
     {
       name: "grades",
       Icon: ChartNoAxesCombined,
-      path: "/grades",
+      path: "/teacher/grades",
     },
     {
       name: "messages",
       Icon: Mail,
-      path: "/messages",
+      path: "/teacher/messages",
     },
   ],
   admin: [
     {
       name: "dashboard",
       Icon: LayoutDashboard,
-      path: "/student",
+      path: "/admin/dashboard",
     },
     {
       name: "assignments",
       Icon: ClipboardList,
-      path: "/assignments",
+      path: "/admin/assignments",
     },
     {
       name: "grades",
       Icon: ChartNoAxesCombined,
-      path: "/grades",
+      path: "/admin /grades",
     },
     {
       name: "messages",
       Icon: Mail,
-      path: "/messages",
+      path: "/admin/messages",
     },
   ],
 }

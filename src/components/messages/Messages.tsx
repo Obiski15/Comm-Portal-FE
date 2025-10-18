@@ -98,14 +98,14 @@ function Messages({ messageId }: { messageId: MessageId }) {
                       messages?.data.recipientInfo?.image ??
                       "/images/no-profile.jpg"
                     }
-                    alt={messages?.data.recipientInfo?.name ?? "user"}
+                    alt={messages?.data.recipientInfo?.full_name ?? "user"}
                     className="object-cover"
                     fill
                   />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">
-                    {messages?.data.recipientInfo?.name}
+                  <h3 className="text-xl font-bold capitalize">
+                    {messages?.data.recipientInfo?.full_name}
                   </h3>
                   <p className="text-sm text-muted-foreground">
                     {isUserActive ? "Active now" : "Offline"}

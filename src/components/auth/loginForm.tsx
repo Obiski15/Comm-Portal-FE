@@ -40,13 +40,13 @@ function LoginForm() {
         toast.error((error as unknown as IError).error.message)
       },
 
-      onSuccess: () => {
+      onSuccess: data => {
         form.reset({
           email: "",
           password: "",
         })
         toast.success("User Authenticated")
-        router.push("/dashboard")
+        router.push(`/${data.data.user.role}/dashboard`)
       },
     })
   }

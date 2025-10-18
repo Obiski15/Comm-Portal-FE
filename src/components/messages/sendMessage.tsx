@@ -12,6 +12,7 @@ import Image from "next/image"
 import { Message, MessageId } from "@/types"
 import {
   AudioLines,
+  Ellipsis,
   Languages,
   Image as LucideImage,
   Mic,
@@ -24,6 +25,7 @@ import { useSendMessage } from "@/hooks/messages/useSendMessage"
 import { useTranslate } from "@/hooks/spitch/useTranslate"
 import { useUser } from "@/hooks/user/useUser"
 
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import {
   Select,
   SelectContent,
@@ -155,15 +157,6 @@ function SendMessage({
               <span>Speech-to-Text Active</span>
             </div>
           </div>
-
-          <button
-            disabled={isLoadingMessages}
-            onClick={() => {
-              imageRef.current?.click()
-            }}
-          >
-            <LucideImage className="size-5" />
-          </button>
         </div>
 
         <div className="relative">
@@ -178,12 +171,35 @@ function SendMessage({
           />
 
           <div className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center gap-2">
-            <button
-              disabled={isLoadingMessages}
-              className="rounded-full bg-muted p-3 transition-colors hover:bg-gray-600"
-            >
-              <Mic />
-            </button>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button
+                  disabled={isLoadingMessages}
+                  className="rounded-full bg-muted p-3 transition-colors hover:bg-gray-600"
+                >
+                  <Ellipsis />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-fit border-none bg-transparent p-0">
+                <div className="flex flex-col items-center justify-center gap-2">
+                  <button
+                    disabled={isLoadingMessages}
+                    onClick={() => {
+                      imageRef.current?.click()
+                    }}
+                    className="rounded-full bg-muted p-3 transition-colors hover:bg-gray-600"
+                  >
+                    <LucideImage className="size-5" />
+                  </button>
+                  <button
+                    disabled={isLoadingMessages}
+                    className="rounded-full bg-muted p-3 transition-colors hover:bg-gray-600"
+                  >
+                    <Mic />
+                  </button>
+                </div>
+              </PopoverContent>
+            </Popover>
 
             <button
               onClick={handleSendMessage}

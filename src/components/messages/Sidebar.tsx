@@ -46,7 +46,7 @@ function Sidebar() {
               <Link
                 key={i}
                 className="flex items-center gap-4 rounded-xl bg-popover/80 p-3"
-                href={`/messages/${"user-68ce1b5550c15b73d3506bdc"}`}
+                href={`/student/messages/${"user-68f2c73e110bd3d5d790d4c1"}`}
               >
                 <div className="aspect-square size-14 rounded-full bg-cover bg-center bg-no-repeat"></div>
                 <div className="flex-1">

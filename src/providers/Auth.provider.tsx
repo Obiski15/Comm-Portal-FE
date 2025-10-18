@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, ReactNode, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { IError, User } from "@/types"
 
 import Loading from "@/components/shared/loading"
@@ -20,6 +20,7 @@ const AuthProviderContext = createContext<IAuth>({
 function AuthProvider({ children }: { children: ReactNode }) {
   const { connectSocket, disconnectSocket } = useSocket()
   const { data, isLoading, error } = useUser()
+  const pathname = usePathname()
   const router = useRouter()
 
   useEffect(() => {
@@ -45,7 +46,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   if (isLoading) return <Loading />
 
-  if (!data?.data.user) return
+  if (!data?.data?.user || !(pathname.split("/")[1] === data?.data?.user?.role))
+    return
 
   return (
     <AuthProviderContext.Provider value={{ user: data!.data.user }}>

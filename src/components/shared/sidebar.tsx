@@ -31,15 +31,16 @@ export default function Sidebar() {
           </div>
         ) : (
           <div className="flex items-center gap-3 p-2">
-            <div className="relative aspect-square size-10 rounded-full">
+            <div className="relative aspect-square size-10 overflow-hidden rounded-full">
               <Image
+                className="object-cover"
                 src={user?.data.user?.image ?? "/images/no-profile.jpg"}
-                alt={user?.data.user?.name ?? "user"}
+                alt={user?.data.user?.full_name ?? "user"}
                 fill
               />
             </div>
             <h1 className="text-base font-medium leading-normal">
-              {user?.data.user?.name ?? "User"}
+              {user?.data.user?.full_name ?? "User"}
             </h1>
           </div>
         )}
