@@ -14,6 +14,10 @@ export default class AuthService extends BaseService {
     })
   }
 
+  async logout() {
+    return await this.post("/logout")
+  }
+
   async signup({ fullName, confirmPassword, password, token }: ISignup) {
     return await this.post<Omit<ISignup, "token">, { data: { user: User } }>(
       `/signup?token=${token}`,

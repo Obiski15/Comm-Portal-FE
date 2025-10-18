@@ -4,12 +4,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { UserRole } from "@/types"
-import { LogOut, Settings } from "lucide-react"
+import { Settings } from "lucide-react"
 
 import { USER_SIDEBAR } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 import { useUser } from "@/hooks/user/useUser"
 
+import Logout from "../auth/Logout"
 import { Skeleton } from "../ui/skeleton"
 
 export default function Sidebar() {
@@ -71,13 +72,7 @@ export default function Sidebar() {
             <Settings />
             <p className="text-sm font-medium">Settings</p>
           </Link>
-          <Link
-            className="hover: flex items-center gap-3 rounded-full px-3 py-2.5 text-muted-foreground transition-colors hover:bg-muted/50"
-            href="#"
-          >
-            <LogOut />
-            <p className="text-sm font-medium">Logout</p>
-          </Link>
+          <Logout />
         </div>
       </div>
     </div>
